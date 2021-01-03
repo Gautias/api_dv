@@ -20,6 +20,7 @@ export const registerMidd = (req: Request, res: Response, next: () => void) => {
             }
             if (error)
                 textError += `${champsRequire[require]}, `
+                if
         }
         if (textError.length > 0) {
             textError = textError.slice(0, -2);
