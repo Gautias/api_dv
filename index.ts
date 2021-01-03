@@ -1,30 +1,22 @@
-import MySQL from './src/db/mySQL';
-import { createConnection, Connection } from 'mysql';
-import Personne from './src/models/Personne';
-import { Request, Response } from 'express';
+import bodyParser from "body-parser";
+import { config, parse } from "dotenv";
+import express from "express";
+import cors from "cors";
 
+import { AuthentificationRoute } from "./src/routes/AuthentificationRoute";
+import { json } from 'body-parser';
 
-const bdd: Connection = createConnection({ // Init params to database
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'dv_api',
-    port: parseInt((process.env.PORTMYSQL === undefined) ? '3306' : process.env.PORTMYSQL) // 3306 port default to mysql
+config(); //process.env
+const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use('/auth', AuthentificationRoute);
+
+app.listen(8080, () => {
+    console.log(`Server run to http://localhost:8080`);
 })
-bdd.connect(err => {
-    if (err) {
-        console.log('Connection database error');
-    } else {
-        console.log('connection success');
-        
-    }
-})
-
-// console.log(AuthController);
-
-
-Personne.isExiste('mail.com').then((value) => {
-    console.log(value);
-})
-
-

@@ -48,7 +48,7 @@ export default abstract class MySQL {
 
             columns = columns.slice(0, -1); // delete the last carac.
 
-            const query = bdd.query(`SELECT ${columns} FROM ${table} WHERE ${conditionWhere} ;`, [data], (error, results, fields) => { // excute request sql
+            const query = bdd.query(`SELECT ${columns} FROM ${table};`, [data], (error, results, fields) => { // excute request sql
                 if (error) {
                     reject(error); // Reponse promise false => catch
                     console.log(error);
@@ -64,11 +64,10 @@ export default abstract class MySQL {
     static selectJoin(table: listeTables, join: Array < jointureInterface > , where ? : any): any {
         return new Promise((resolve, reject) => { // return Promise because the processing time of the database | The only way to get an answer is the "resolve()" or "reject()"
             const bdd: Connection = createConnection({ // Init params to database
-                host: process.env.DB_HOST,
-                user: process.env.DB_USER,
-                password: process.env.DB_PASS,
-                database: process.env.DB_DATABASE,
-                socketPath: process.env.SOCKETPATH, // Socket to Mac or Linux
+                host: 'localhost',
+                user: 'root',
+                password: '',
+                database: 'dv_api',
                 port: parseInt((process.env.PORTMYSQL === undefined) ? '3306' : process.env.PORTMYSQL) // 3306 port default to mysql
             })
             bdd.connect(err => {
