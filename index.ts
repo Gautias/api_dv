@@ -2,7 +2,6 @@ import MySQL from './src/db/mySQL';
 import { createConnection, Connection } from 'mysql';
 import Personne from './src/models/Personne';
 import { Request, Response } from 'express';
-// import AuthController from './src/controller/AuthController';
 
 
 const bdd: Connection = createConnection({ // Init params to database
@@ -24,8 +23,8 @@ bdd.connect(err => {
 // console.log(AuthController);
 
 
-// Personne.isExiste('mail.com').then((value) => {
-//     console.log(value);
-// })
+Personne.isExiste('mail.com').then((value) => {
+    console.log(value);
+})
 
 
