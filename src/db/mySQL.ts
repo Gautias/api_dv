@@ -1,6 +1,7 @@
+
 import { createConnection, Connection } from 'mysql';
 import listAttributSelect, { listeTables } from '../utils/attributeSelect';
-// import Personne from '../models/Personne';
+import Personne from '../models/Personne';
 
 export interface jointureInterface {
     type: 'LEFT' | 'RIGHT' | 'FULL' | 'INNER';
