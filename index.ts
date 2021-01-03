@@ -1,6 +1,6 @@
 import MySQL from './src/db/mySQL';
 import { createConnection, Connection } from 'mysql';
-// import Personne from './src/models/Personne';
+import Personne from './src/models/Personne';
 import { Request, Response } from 'express';
 // import AuthController from './src/controller/AuthController';
 
