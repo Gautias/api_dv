@@ -1,5 +1,6 @@
 import { createConnection, Connection } from 'mysql';
 import listAttributSelect, { listeTables } from '../utils/attributeSelect';
+import Personne from '../models/Personne';
 
 
 export default abstract class MySQL {
@@ -29,11 +30,6 @@ export default abstract class MySQL {
                 columns += "`" + champs + "`,";
             }
 
-
-            // for (const key in where) {
-            //     conditionWhere += "`" + key + "` LIKE ? and ";
-            //     data.push(where[key])
-            //
             conditionWhere = conditionWhere.slice(0, -5); // delete the last carac.
 
             columns = columns.slice(0, -1); // delete the last carac.
@@ -50,4 +46,6 @@ export default abstract class MySQL {
         })
         
     }
+    
+
 }

@@ -17,9 +17,15 @@ bdd.connect(err => {
         console.log('Connection database error');
     } else {
         console.log('connection success');
+        console.log(Personne.isExiste);
         
     }
 })
+
+Personne.isExiste('mail.com').then((value) => {
+    console.log(value);
+})
+
 // MySQL.select('personne').then(
 //     async(req: Request, res: Response) => {
 //       let data = req.body;
