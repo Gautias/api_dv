@@ -2,7 +2,7 @@ import MySQL from './src/db/mySQL';
 import { createConnection, Connection } from 'mysql';
 import Personne from './src/models/Personne';
 import { Request, Response } from 'express';
-
+// import AuthController from './src/controller/AuthController';
 
 
 const bdd: Connection = createConnection({ // Init params to database
@@ -17,23 +17,15 @@ bdd.connect(err => {
         console.log('Connection database error');
     } else {
         console.log('connection success');
-        console.log(Personne.isExiste);
         
     }
 })
 
+// console.log(AuthController);
+
+
 Personne.isExiste('mail.com').then((value) => {
     console.log(value);
 })
-
-// MySQL.select('personne').then(
-//     async(req: Request, res: Response) => {
-//       let data = req.body;
-//       console.log(data.res.lastname)
-//     }
-// )
-
-
-//const query = bdd.query('SELECT * FROM `personne`')
 
 
