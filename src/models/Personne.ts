@@ -3,9 +3,9 @@ import MySQL from '../db/mySQL';
 export default class Personne {
 
     protected idpersonne ? : number | null;
-    public nom: string | null;
-    public prenom: string | null;
-    public dateNaiss: string | null;
+    public lastname: string | null;
+    public firstname: string | null;
+    public dateNaissance: string | null;
     public adresse ? : string;
     public ville ? : string;
     public zipcode ? : string;
@@ -17,27 +17,27 @@ export default class Personne {
      * @param {(Personne(instance) | null)} id
      * @param {string} [firstname='']
      * @param {string} [lastname='']
-     * @param {string} [dateNaiss='']
+     * @param {string} [dateNaissance='']
      * @param {string} [adresse]
      * @param {string} [ville]
      * @param {string} [zipcode]
      * @memberof Personne
      */
-    constructor(personne: Personne | null, firstname: string = '', lastname: string = '', dateNaiss: string = '', idPays: number = 1, adresse ? : string, ville ? : string, zipcode ? : string) {
+    constructor(personne: Personne | null, firstname: string = '', lastname: string = '', dateNaissance: string = '', adresse ? : string, ville ? : string, zipcode ? : string) {
         if (personne === null) {
             this.ville = ville;
             this.adresse = adresse;
             this.zipcode = zipcode;
-            this.dateNaiss = dateNaiss;
-            this.nom = lastname.toUpperCase().trim();
-            this.prenom = firstname.toLowerCase().trim();
+            this.dateNaissance = dateNaissance;
+            this.lastname = lastname.toUpperCase().trim();
+            this.firstname = firstname.toLowerCase().trim();
         } else {
-            this.nom = personne.nom;
+            this.lastname = personne.lastname;
             this.ville = personne.ville;
-            this.prenom = personne.prenom;
+            this.firstname = personne.firstname;
             this.zipcode = personne.zipcode;
             this.adresse = personne.adresse;
-            this.dateNaiss = personne.dateNaiss;
+            this.dateNaissance = personne.dateNaissance;
             this.idpersonne = personne.id;
         }
 
@@ -50,7 +50,7 @@ export default class Personne {
     }
 
     get fullname(): string {
-        return this.prenom + ' ' + this.nom;
+        return this.firstname + ' ' + this.lastname;
     }
 
     get address(): string {
@@ -65,15 +65,23 @@ export default class Personne {
      * @memberof Personne
      */
     get attributInsert(): Array < string > {
-        return ['nom', 'prenom', 'dateNaissance', 'adresse']
+        return ['lastname', 'firstname', 'dateNaissance', 'adresse']
     }
 
     /************************* METHODS *************************/
 
-    static isExiste(email: string) {
+    static select(where: any) {
         return new Promise((resolve, reject) => {
-            MySQL.select('personne').then((arrayPersonne: Array < any > ) => {
-                    resolve((arrayPersonne.length > 0))
+            MySQL.select('personne', where).then((arrayPersonne: Array < any > ) => {
+                    let data: Array < Personne > = [];
+                    for (const personne of arrayPersonne) {
+                        personne.dateNaissance = new String(personne.dateNaissance)
+                        personne.id = personne.id;
+                        personne.nom = personne.lastname;
+                        data.push(new Personne(personne));
+                    }
+                    console.log(data);
+                    resolve(data)
                 })
                 .catch((err: any) => {
                     console.log(err);
@@ -81,5 +89,6 @@ export default class Personne {
                 });
         })
     }
+
     
 }

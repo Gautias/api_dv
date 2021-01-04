@@ -1,14 +1,14 @@
-import MySQL from '../db/MySQL';
+import MySQL from '../db/mySQL';
 import Personne from './Personne';
 import EmailException from '../exception/EmailException';
 import PasswordException from '../exception/PasswordException';
-import { jointureInterface } from '../db/MySQL';
+import { jointureInterface } from '../db/mySQL';
 
 export default class Utilisateur extends Personne {
 
     email: string;
     password: string = '';
-    personne_idpersonne: number | null | undefined;
+    idPersonne: number | null | undefined;
 
     protected table: string = 'utilisateur';
 
@@ -23,7 +23,7 @@ export default class Utilisateur extends Personne {
 
         this.email = email;
         this.password = password;
-        this.personne_idpersonne = this.id;
+        this.idPersonne = this.id;
     }
 
     /************************* GETTER *************************/
@@ -46,13 +46,25 @@ export default class Utilisateur extends Personne {
                     let newPersonne: Personne;
                     let data: Array < Utilisateur > = [];
                     for (const personne of arrayUtilisateur) {
-                        personne.dateNaissance = new String(personne.dateNaiss)
-                        personne.id = personne.idpersonne;
+                        personne.dateNaissance = new String(personne.dateNaissance)
+                        personne.id = personne.idPersonne;
                         newPersonne = new Personne(personne);
                         data.push(new Utilisateur(newPersonne, personne.email, personne.password));
                     }
                     console.log(data);
                     resolve(data)
+                })
+                .catch((err: any) => {
+                    console.log(err);
+                    reject(false)
+                });
+        })
+    }
+
+    static isExiste(email: string) {
+        return new Promise((resolve, reject) => {
+            MySQL.select('utilisateur').then((arrayPersonne: Array < any > ) => {
+                    resolve((arrayPersonne.length > 0))
                 })
                 .catch((err: any) => {
                     console.log(err);

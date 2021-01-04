@@ -1,5 +1,5 @@
 import { decode, sign } from 'jsonwebtoken';
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import Personne from '../models/Personne';
 import PasswordException from '../exception/PasswordException';
 import Utilisateur from '../models/Utilisateur';
@@ -20,6 +20,8 @@ export default class AuthController {
 
             if (!isOk)
                 throw new Error(`User is undefined!`)
+                
+                
 
             const theToken: any = await sign({ id: utilisateur.idPersonne, name: utilisateur.fullname }, < string > process.env.JWT_KEY, { expiresIn: '1m' })
 
@@ -32,4 +34,8 @@ export default class AuthController {
             return res.status(401).json({ error: true, message: err.message }).end();
         }
     }
+
+    refreshToken = async(req: Request, res: Response) => {}
+    checkToken = async(req: Request, res: Response) => {}
+    logout = async(req: Request, res: Response) => {}
 }

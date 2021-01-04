@@ -1,4 +1,4 @@
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from "bcrypt";
 
 export default class PasswordException extends Error {
 
