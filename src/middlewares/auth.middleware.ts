@@ -13,7 +13,7 @@ export const authMidd = (req: Request, res: Response, next: () => void) => {
 export const loginMidd = (req: Request, res: Response, next: () => void) => {
 
     let data: any = req.body;
-    
+    const cpt = 0;
     const champsRequire = [`email`, `password`]
 
     try {
@@ -43,5 +43,6 @@ export const loginMidd = (req: Request, res: Response, next: () => void) => {
 
     } catch (err) {
         return res.status(401).json({ error: true, message: err.message }).end();
+        
     }
 }

@@ -51,7 +51,7 @@ export default class Utilisateur extends Personne {
                         newPersonne = new Personne(personne);
                         data.push(new Utilisateur(newPersonne, personne.email, personne.password));
                     }
-                    console.log(data);
+                    //console.log(data);
                     resolve(data)
                 })
                 .catch((err: any) => {
@@ -64,7 +64,7 @@ export default class Utilisateur extends Personne {
     static isExiste(email: string) {
         return new Promise((resolve, reject) => {
             MySQL.select('utilisateur').then((arrayPersonne: Array < any > ) => {
-                    resolve((arrayPersonne.length > 0))
+                    resolve((arrayPersonne))
                 })
                 .catch((err: any) => {
                     console.log(err);

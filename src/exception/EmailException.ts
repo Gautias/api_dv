@@ -1,7 +1,17 @@
 export default class EmailException extends Error {
 
     constructor() {
-        super('Email is not valid')
+        super("Un compte utilisant cette adresse mail est deja enregistré")        
+        
+    }
+
+    static compareEmail(data_email: string, user_email: string): boolean{
+        if(data_email !== user_email){
+            return false
+        }else{
+            return true
+        }
+         
     }
 
     static checkEmail(email: string): boolean {

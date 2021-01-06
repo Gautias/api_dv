@@ -1,8 +1,8 @@
-import { hash, compare } from "bcrypt";
+import { hash, compare, compareSync } from "bcrypt";
 
 export default class PasswordException extends Error {
 
-    private static SALT_ROUNDS: number = 10;
+    private static SALT_ROUNDS: number = 8;
     private static MIN_PASS_SIZE: number = 6;
 
     constructor() {
@@ -14,10 +14,14 @@ export default class PasswordException extends Error {
     }
 
     public static async hashPassword(password: string): Promise < string > {
-        return await hash(password, this.SALT_ROUNDS)
+        console.log(await hash(password, this.SALT_ROUNDS));
+        return await hash(password, this.SALT_ROUNDS);
     }
 
-    public static async comparePassword(password: string, hash: string): Promise < boolean > {
+    public static async comparePassword(password: string, hash: string): Promise < boolean > {     
+        // console.log(await compare(password, hash));
+        // console.log(password);
+        
         return await compare(password, hash)
     }
 
