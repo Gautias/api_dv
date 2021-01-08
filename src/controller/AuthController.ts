@@ -1,6 +1,5 @@
-import { decode, sign } from 'jsonwebtoken';
+import { decode, sign, verify } from 'jsonwebtoken';
 import { Request, response, Response } from 'express';
-import Personne from '../models/Personne';
 import PasswordException from '../exception/PasswordException';
 import Utilisateur from '../models/Utilisateur';
 import EmailException from '../exception/EmailException';
@@ -16,6 +15,7 @@ export default class AuthController {
             if (utilisateur.length < 0)
                 throw new Error(`Email not valid`)
             utilisateur = utilisateur[0];
+            console.log(utilisateur);
             
             const isOk = await PasswordException.comparePassword(data.password, utilisateur.password);
             const emailValid = await EmailException.compareEmail(data.email, utilisateur.email)
@@ -49,6 +49,35 @@ export default class AuthController {
                 },
                 expired: await ( < any > decode(theToken)).exp
             }
+            return await res.status(201).json(token);
+            cpt = 0
+        } catch (err) {
+            return res.status(401).json({ error: true, message: err.message }).end();
+        }
+    }
+
+    static subscribe = async(req: Request, res: Response) =>{
+
+        let data: any = req.body;
+        // console.log(data);
+        
+        try{
+            let utilisateur: any = await Utilisateur.select({ email: data.email });
+            utilisateur = utilisateur[0];
+
+            const theToken: any = await sign({ id: utilisateur.idPersonne, name: utilisateur.fullname }, < string > process.env.JWT_KEY, { expiresIn: '1m' })
+            const verif: any = await verify(theToken, < string > process.env.JWT_KEY);
+            console.log("le token : "+ theToken);
+            
+
+            if(!verif && !theToken){
+                throw new Error(`Votre Token n'est pas correct`)
+            }
+            
+            const token = {
+                error: false,
+                message: "Votre periode d'essai vient d'être activé",
+            }
             return res.status(201).json(token);
             cpt = 0
         } catch (err) {
@@ -59,4 +88,5 @@ export default class AuthController {
     refreshToken = async(req: Request, res: Response) => {}
     checkToken = async(req: Request, res: Response) => {}
     logout = async(req: Request, res: Response) => {}
+    static then: any;
 }

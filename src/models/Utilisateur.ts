@@ -1,18 +1,19 @@
-import MySQL from '../db/mySQL';
+import MySQL from '../db/MySQL';
 import Personne from './Personne';
 import EmailException from '../exception/EmailException';
 import PasswordException from '../exception/PasswordException';
-import { jointureInterface } from '../db/mySQL';
+import { jointureInterface } from '../db/MySQL';
 
 export default class Utilisateur extends Personne {
 
     email: string;
     password: string = '';
     idPersonne: number | null | undefined;
+    token: string = '';
 
     protected table: string = 'utilisateur';
 
-    constructor(id: Personne, email: string = '', password: string = '') {
+    constructor(id: Personne, email: string = '', password: string = '', token: string = '') {
 
         super(id);
 
@@ -30,7 +31,7 @@ export default class Utilisateur extends Personne {
 
     get attributInsert(): Array < string > {
         return ['id', 'email', 'password']
-    };
+    }
 
     static select(where: any) {
         return new Promise((resolve, reject) => {

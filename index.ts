@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import { AuthentificationRoute } from "./src/routes/AuthentificationRoute";
 import Utilisateur from './src/models/Utilisateur';
-import AuthController from "./src/controller/AuthController";
+import login from './src/controller/AuthController';
 import PasswordException from './src/exception/PasswordException';
 
 
@@ -22,8 +22,5 @@ app.use('/auth', AuthentificationRoute);
 app.listen(process.env.PORT, () => {
     console.log(`Server run to http://localhost:${process.env.PORT}`);
 })
-// let mdp = "123456"
-// const pass = (async () => {
-//     await PasswordException.hashPassword(mdp);
-//   })()
+
 

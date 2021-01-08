@@ -1,4 +1,4 @@
-import MySQL from '../db/mySQL';
+import MySQL from '../db/MySQL';
 
 export default class Personne {
 
