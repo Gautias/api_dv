@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Request, Response } from 'express';
-import { authMidd } from '';
+import { loginMidd, authMidd } from '../middlewares/auth.middleware';
+import AuthController from '../controller/AuthController';
 
 
 const route: Router = Router();
@@ -8,7 +9,7 @@ const route: Router = Router();
 route.get('/', authMidd, (req: Request, res: Response) => {
     return res.end('<h1>Tests</h1>')
 })
-route.post('/login')
+route.post('/login', loginMidd, AuthController.login)
 route.post('/register')
 route.post('/subscription')
 route.post('/edit_user')
