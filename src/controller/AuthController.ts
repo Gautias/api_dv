@@ -65,7 +65,7 @@ export default class AuthController {
             let utilisateur: any = await Utilisateur.select({ email: data.email });
             utilisateur = utilisateur[0];
 
-            const theToken: any = await sign({ id: utilisateur.idPersonne, name: utilisateur.fullname }, < string > process.env.JWT_KEY, { expiresIn: '1m' })
+            const theToken: any = await sign({ id: utilisateur.idPersonne, name: utilisateur.fullname }, < string > process.env.JWT_KEY, { expiresIn: '5m' })
             const verif: any = await verify(theToken, < string > process.env.JWT_KEY);
             console.log("le token : "+ theToken);
             
